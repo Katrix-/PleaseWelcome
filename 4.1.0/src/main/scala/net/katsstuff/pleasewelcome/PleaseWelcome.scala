@@ -109,6 +109,8 @@ class PleaseWelcome @Inject()(logger: Logger, @ConfigDir(sharedRoot = false) cfg
       new RemoveSpawnCmd(pluginCmd),
       new SetInventoryCmd(pluginCmd)
     )
+
+    pluginCmd.registerHelp()
     Sponge.getCommandManager.register(this, pluginCmd.commandSpec, pluginCmd.aliases: _*)
   }
 
