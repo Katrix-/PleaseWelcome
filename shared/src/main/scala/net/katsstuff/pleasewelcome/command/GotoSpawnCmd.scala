@@ -44,11 +44,11 @@ class GotoSpawnCmd(parent: CmdPlugin)(implicit plugin: PleaseWelcomePlugin) exte
     val executed = for {
       player <- playerTypeable.cast(src).toRight(nonPlayerErrorLocalized)
       transform <- plugin.data.loginTransform
-        .toRight(new CommandException(PWResource.getText("cmd.gotoSpawn.locationError")))
+        .toRight(new CommandException(PWResource.getText("command.error.spawnTransform")))
       text <- Either.cond(
         player.setLocationAndRotationSafely(transform.getLocation, transform.getRotation),
         t"$GREEN${PWResource.get("cmd.gotoSpawn.success")}",
-        new CommandException(PWResource.getText("cmd.gotoSpawn.locationError"))
+        new CommandException(PWResource.getText("command.error.spawnTransform"))
       )
     } yield text
 
