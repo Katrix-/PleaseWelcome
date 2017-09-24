@@ -47,12 +47,16 @@ class FakeLocatedSource(commandSource: CommandSource, location: Location[World])
   override def getSubjectData:          SubjectData             = commandSource.getSubjectData
   override def getTransientSubjectData: SubjectData             = commandSource.getTransientSubjectData
 
-  override def hasPermission(contexts: util.Set[Context], permission: String):      Boolean  = commandSource.hasPermission(contexts, permission)
-  override def getPermissionValue(contexts: util.Set[Context], permission: String): Tristate = commandSource.getPermissionValue(contexts, permission)
+  override def hasPermission(contexts: util.Set[Context], permission: String): Boolean =
+    commandSource.hasPermission(contexts, permission)
+  override def getPermissionValue(contexts: util.Set[Context], permission: String): Tristate =
+    commandSource.getPermissionValue(contexts, permission)
 
-  override def isChildOf(contexts: util.Set[Context], parent: Subject): Boolean            = commandSource.isChildOf(contexts, parent)
-  override def getParents(contexts: util.Set[Context]):                 util.List[Subject] = commandSource.getParents(contexts)
-  override def getOption(contexts: util.Set[Context], key: String):     Optional[String]   = commandSource.getOption(contexts, key)
+  override def isChildOf(contexts: util.Set[Context], parent: Subject): Boolean =
+    commandSource.isChildOf(contexts, parent)
+  override def getParents(contexts: util.Set[Context]): util.List[Subject] = commandSource.getParents(contexts)
+  override def getOption(contexts: util.Set[Context], key: String): Optional[String] =
+    commandSource.getOption(contexts, key)
 
   override def getIdentifier:     String            = commandSource.getIdentifier
   override def getActiveContexts: util.Set[Context] = commandSource.getActiveContexts

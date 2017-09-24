@@ -41,7 +41,8 @@ import net.katsstuff.pleasewelcome.lib.LibPerm
 import net.katsstuff.pleasewelcome.{PWResource, PleaseWelcomePlugin, VersionHelper}
 import shapeless.Typeable
 
-class SetInventoryCmd(parent: CmdPlugin)(implicit plugin: PleaseWelcomePlugin, versionHelper: VersionHelper) extends LocalizedCommand(Some(parent)) {
+class SetInventoryCmd(parent: CmdPlugin)(implicit plugin: PleaseWelcomePlugin, versionHelper: VersionHelper)
+    extends LocalizedCommand(Some(parent)) {
   val playerTypeable: Typeable[Player] = Typeable[Player]
 
   override def execute(src: CommandSource, args: CommandContext): CommandResult = Localized(src) { implicit locale =>
@@ -54,7 +55,7 @@ class SetInventoryCmd(parent: CmdPlugin)(implicit plugin: PleaseWelcomePlugin, v
         val slots = player.getInventory.slots[Slot].asScala
         val indexToSlot = slots.flatMap { slot =>
           val content = slot.peek.toOption
-          val index = slot.getProperties(classOf[SlotIndex]).asScala.headOption.map(_.getValue.intValue)
+          val index   = slot.getProperties(classOf[SlotIndex]).asScala.headOption.map(_.getValue.intValue)
           content.map(stack => index -> stack)
         }.toMap
 

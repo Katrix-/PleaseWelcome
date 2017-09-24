@@ -50,7 +50,10 @@ class SetSpawnCmd(parent: CmdPlugin)(implicit plugin: PleaseWelcomePlugin) exten
       case Right(player) =>
         val loc = player.getLocation
         val rot = player.getRotation
-        plugin.data = plugin.data.copy(spawnPos = Some(PlayerPosition(loc.getX, loc.getY, loc.getZ, loc.getExtent.getUniqueId, rot.getX, rot.getY, rot.getZ)))
+        plugin.data = plugin.data.copy(
+          spawnPos =
+            Some(PlayerPosition(loc.getX, loc.getY, loc.getZ, loc.getExtent.getUniqueId, rot.getX, rot.getY, rot.getZ))
+        )
         src.sendMessage(t"$GREEN${PWResource.get("cmd.setSpawn.success")}")
         CommandResult.success()
       case Left(e) => throw e

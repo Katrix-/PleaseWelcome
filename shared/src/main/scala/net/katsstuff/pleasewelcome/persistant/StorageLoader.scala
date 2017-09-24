@@ -52,10 +52,9 @@ class StorageLoader(dir: Path)(implicit plugin: KatPlugin)
             WelcomeData(None, Map.empty)
         }
       case _ =>
-        if(versionNode.getString != null) {
+        if (versionNode.getString != null) {
           LogHelper.error("Invalid storage version. Could not load welcome data from storage")
-        }
-        else {
+        } else {
           saveData(WelcomeData(None, Map.empty))
         }
         WelcomeData(None, Map.empty)

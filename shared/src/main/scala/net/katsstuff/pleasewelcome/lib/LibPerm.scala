@@ -23,12 +23,11 @@ package net.katsstuff.pleasewelcome.lib
 
 object LibPerm {
 
-
   val PleaseWelcome    = "pleasewelcome"
   val PleaseWelcomeMod = s"$PleaseWelcome.mod"
 
-  val SetSpawn  = s"$PleaseWelcomeMod.setspawn"
-  val GotoSpawn = s"$PleaseWelcomeMod.gotospawn"
-  val RemoveSpawn = s"$PleaseWelcomeMod.removespawn"
+  val SetSpawn     = s"$PleaseWelcomeMod.setspawn"
+  val GotoSpawn    = s"$PleaseWelcomeMod.gotospawn"
+  val RemoveSpawn  = s"$PleaseWelcomeMod.removespawn"
   val SetInventory = s"$PleaseWelcomeMod.setinventory"
 }

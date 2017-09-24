@@ -120,6 +120,12 @@ lazy val pleaseWelcomeV600 = (project in file("6.0.0"))
   .settings(spongeApiVersion := "6.0.0", libraryDependencies += katLibDependecy("6-0-0"))
 
 lazy val pleaseWelcomeRoot = (project in file("."))
-  .settings(publishArtifact := false, assembleArtifact := false, spongeMetaCreate := false, publish := {}, publishLocal := {})
+  .settings(
+    publishArtifact := false,
+    assembleArtifact := false,
+    spongeMetaCreate := false,
+    publish := {},
+    publishLocal := {}
+  )
   .disablePlugins(AssemblyPlugin)
   .aggregate(pleaseWelcomeShared, pleaseWelcomeV410, pleaseWelcomeV500, pleaseWelcomeV600)

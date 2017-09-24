@@ -31,7 +31,8 @@ import io.github.katrix.katlib.persistant.CommentedConfigValue
 import ninja.leaping.configurate.commented.CommentedConfigurationNode
 import ninja.leaping.configurate.objectmapping.ObjectMappingException
 
-class WelcomeConfigV1(cfgRoot: CommentedConfigurationNode, default: WelcomeConfig)(implicit plugin: KatPlugin) extends WelcomeConfig {
+class WelcomeConfigV1(cfgRoot: CommentedConfigurationNode, default: WelcomeConfig)(implicit plugin: KatPlugin)
+    extends WelcomeConfig {
 
   override val version:         CommentedConfigValue[String]               = configValue(default.version)
   override val welcomeMessage:  CommentedConfigValue[Option[TextTemplate]] = configValue(default.welcomeMessage)
@@ -42,7 +43,10 @@ class WelcomeConfigV1(cfgRoot: CommentedConfigurationNode, default: WelcomeConfi
       .map(found => existing.value_=(found)) //Doesn't want to work with CommentedConfigValue
       .recover {
         case e: ObjectMappingException =>
-          LogHelper.error(s"Failed to deserialize value of ${existing.path.mkString(".")}, using the default instead", e)
+          LogHelper.error(
+            s"Failed to deserialize value of ${existing.path.mkString(".")}, using the default instead",
+            e
+          )
           existing
         case _: NoSuchElementException =>
           LogHelper.warn(s"No value found for ${existing.path.mkString(".")}, using default instead")

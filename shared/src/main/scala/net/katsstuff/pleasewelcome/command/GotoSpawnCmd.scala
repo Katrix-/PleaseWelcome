@@ -42,8 +42,9 @@ class GotoSpawnCmd(parent: CmdPlugin)(implicit plugin: PleaseWelcomePlugin) exte
 
   override def execute(src: CommandSource, args: CommandContext): CommandResult = Localized(src) { implicit locale =>
     val executed = for {
-      player    <- playerTypeable.cast(src).toRight(nonPlayerErrorLocalized)
-      transform <- plugin.data.loginTransform.toRight(new CommandException(PWResource.getText("cmd.gotoSpawn.locationError")))
+      player <- playerTypeable.cast(src).toRight(nonPlayerErrorLocalized)
+      transform <- plugin.data.loginTransform
+        .toRight(new CommandException(PWResource.getText("cmd.gotoSpawn.locationError")))
       text <- Either.cond(
         player.setLocationAndRotationSafely(transform.getLocation, transform.getRotation),
         t"$GREEN${PWResource.get("cmd.gotoSpawn.success")}",
@@ -59,7 +60,8 @@ class GotoSpawnCmd(parent: CmdPlugin)(implicit plugin: PleaseWelcomePlugin) exte
     }
   }
 
-  override def localizedDescription(implicit locale: Locale): Option[Text] = Some(PWResource.getText("cmd.gotoSpawn.description"))
+  override def localizedDescription(implicit locale: Locale): Option[Text] =
+    Some(PWResource.getText("cmd.gotoSpawn.description"))
 
   override def commandSpec: CommandSpec =
     CommandSpec

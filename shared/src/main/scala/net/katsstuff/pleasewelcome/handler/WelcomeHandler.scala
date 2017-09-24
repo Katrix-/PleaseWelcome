@@ -30,10 +30,11 @@ import io.github.katrix.katlib.helper.Implicits._
 import net.katsstuff.pleasewelcome.VersionHelper
 import net.katsstuff.pleasewelcome.persistant.{StorageLoader, WelcomeConfig, WelcomeConfigLoader}
 
-class WelcomeHandler(
-    startConfig: WelcomeConfig,
-    startData: WelcomeData
-)(implicit welcomeConfigLoader: WelcomeConfigLoader, storageLoader: StorageLoader, versionHelper: VersionHelper) {
+class WelcomeHandler(startConfig: WelcomeConfig, startData: WelcomeData)(
+    implicit welcomeConfigLoader: WelcomeConfigLoader,
+    storageLoader: StorageLoader,
+    versionHelper: VersionHelper
+) {
 
   private var config      = startConfig
   private var welcomeData = startData
@@ -47,7 +48,10 @@ class WelcomeHandler(
   def onFirstLogin(event: ClientConnectionEvent.Login): Unit = {
     val user = event.getTargetUser
     //Small buffer just in case
-    val firstJoin = user.get(classOf[JoinData]).toOption.forall(j => j.lastPlayed().get().getEpochSecond - j.firstPlayed().get().getEpochSecond <= 3)
+    val firstJoin = user
+      .get(classOf[JoinData])
+      .toOption
+      .forall(j => j.lastPlayed().get().getEpochSecond - j.firstPlayed().get().getEpochSecond <= 3)
 
     if (firstJoin) {
       welcomeData.loginTransform.foreach(event.setToTransform)

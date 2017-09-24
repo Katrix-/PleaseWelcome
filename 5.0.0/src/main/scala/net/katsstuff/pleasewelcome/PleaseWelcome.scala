@@ -63,15 +63,19 @@ object PleaseWelcome {
   version = PleaseWelcome.ConstantVersion,
   dependencies = Array(new Dependency(id = LibKatLibPlugin.Id, version = KatLib.ConstantVersion))
 )
-class PleaseWelcome @Inject()(logger: Logger, @ConfigDir(sharedRoot = false) cfgDir: Path, spongeContainer: PluginContainer)
-    extends ImplKatPlugin(logger, cfgDir, spongeContainer)
+class PleaseWelcome @Inject()(
+    logger: Logger,
+    @ConfigDir(sharedRoot = false) cfgDir: Path,
+    spongeContainer: PluginContainer
+) extends ImplKatPlugin(logger, cfgDir, spongeContainer)
     with PleaseWelcomePlugin {
 
   implicit private val plugin: PleaseWelcome = this
 
   implicit val versionHelper = new VersionHelper {
-    override def createFakeLocatedSource(source: CommandSource, location: Location[World]): CommandSource = new FakeLocatedSource(source, location)
-    override def isInventoryEmpty(inventory: Inventory):                                    Boolean       = inventory.size() == 0
+    override def createFakeLocatedSource(source: CommandSource, location: Location[World]): CommandSource =
+      new FakeLocatedSource(source, location)
+    override def isInventoryEmpty(inventory: Inventory): Boolean = inventory.size() == 0
   }
 
   implicit private lazy val configLoader  = new WelcomeConfigLoader(configDir)
@@ -93,8 +97,9 @@ class PleaseWelcome @Inject()(logger: Logger, @ConfigDir(sharedRoot = false) cfg
   def init(event: GameInitializationEvent): Unit = {
     val serializers = TypeSerializers.getDefaultSerializers
 
-    implicit val uuidSerializer  = TypeSerializerImpl.fromTypeSerializer(serializers.get(typeToken[UUID]), classOf[UUID])
-    implicit val stackSerializer = TypeSerializerImpl.fromTypeSerializer(serializers.get(typeToken[ItemStack]), classOf[ItemStack])
+    implicit val uuidSerializer = TypeSerializerImpl.fromTypeSerializer(serializers.get(typeToken[UUID]), classOf[UUID])
+    implicit val stackSerializer =
+      TypeSerializerImpl.fromTypeSerializer(serializers.get(typeToken[ItemStack]), classOf[ItemStack])
     serializers.registerType(typeToken[WelcomeData], implicitly[TypeSerializer[WelcomeData]])
 
     _config = configLoader.loadData
