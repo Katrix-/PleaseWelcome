@@ -47,8 +47,6 @@ class FakeLocatedSource(commandSource: CommandSource, location: Location[World])
   override def getSubjectData:          SubjectData             = commandSource.getSubjectData
   override def getTransientSubjectData: SubjectData             = commandSource.getTransientSubjectData
 
-  override def hasPermission(contexts: util.Set[Context], permission: String): Boolean =
-    commandSource.hasPermission(contexts, permission)
   override def getPermissionValue(contexts: util.Set[Context], permission: String): Tristate =
     commandSource.getPermissionValue(contexts, permission)
 
