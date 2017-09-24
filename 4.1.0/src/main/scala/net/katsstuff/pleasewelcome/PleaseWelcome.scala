@@ -42,7 +42,7 @@ import io.github.katrix.katlib.lib.LibKatLibPlugin
 import io.github.katrix.katlib.serializer.TypeSerializerImpl
 import io.github.katrix.katlib.serializer.TypeSerializerImpl._
 import io.github.katrix.katlib.{ImplKatPlugin, KatLib}
-import net.katsstuff.pleasewelcome.command.{GotoSpawnCmd, RemoveSpawnCmd, SetInventoryCmd, SetSpawnCmd}
+import net.katsstuff.pleasewelcome.command.{GotoSpawnCmd, RemoveSpawnCmd, SendToSpawnCmd, SetInventoryCmd, SetSpawnCmd}
 import net.katsstuff.pleasewelcome.handler.{WelcomeData, WelcomeHandler}
 import net.katsstuff.pleasewelcome.lib.LibPlugin
 import net.katsstuff.pleasewelcome.persistant.{StorageLoader, WelcomeConfig, WelcomeConfigLoader}
@@ -112,7 +112,8 @@ class PleaseWelcome @Inject()(
       new SetSpawnCmd(pluginCmd),
       new GotoSpawnCmd(pluginCmd),
       new RemoveSpawnCmd(pluginCmd),
-      new SetInventoryCmd(pluginCmd)
+      new SetInventoryCmd(pluginCmd),
+      new SendToSpawnCmd(pluginCmd)
     )
 
     pluginCmd.registerHelp()

@@ -30,4 +30,5 @@ object LibPerm {
   val GotoSpawn    = s"$PleaseWelcomeMod.gotospawn"
   val RemoveSpawn  = s"$PleaseWelcomeMod.removespawn"
   val SetInventory = s"$PleaseWelcomeMod.setinventory"
+  val SendToSpawn  = s"$PleaseWelcomeMod.sendtospawn"
 }
