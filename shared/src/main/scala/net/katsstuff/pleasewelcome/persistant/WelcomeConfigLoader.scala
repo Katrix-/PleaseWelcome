@@ -52,7 +52,7 @@ class WelcomeConfigLoader(dir: Path)(implicit plugin: KatPlugin) extends ConfigL
     //Before 1.11 getId doesn't return something that can be used in a command
     def fireworkRocketName: String = {
       val version = Sponge.getPlatform.getMinecraftVersion.getName.split('.')
-      if (version.length > 1) {
+      if (version.length >= 2) {
         Try(version(1).toInt)
           .collect {
             case i if i < 11 => "FireworksRocketEntity"

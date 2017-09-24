@@ -34,9 +34,9 @@ import io.github.katrix.katlib.helper.Implicits._
 case class PlayerPosition(x: Double, y: Double, z: Double, worldUuid: UUID, pitch: Double, yaw: Double, roll: Double) {
   def transform: Option[Transform[World]] = {
     Sponge.getServer.getWorld(worldUuid).toOption.map { world =>
-      val location = new Location[World](world, x, y, z)
+      val location = new Location(world, x, y, z)
       val rotation = new Vector3d(pitch, yaw, roll)
-      new Transform[World](location, rotation, Vector3d.ONE)
+      new Transform(location, rotation, Vector3d.ONE)
     }
   }
 }

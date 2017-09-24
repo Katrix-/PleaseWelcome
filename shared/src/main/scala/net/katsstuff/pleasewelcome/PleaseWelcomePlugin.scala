@@ -33,7 +33,6 @@ trait PleaseWelcomePlugin extends KatPlugin {
 
   def data_=(newData: WelcomeData): Unit
 
-  //Not future proof if the commandSpec in KatLib is changed
   protected def addChildrenSpec(currentBase: CmdPlugin, children: CommandBase*): Unit =
     currentBase.extraChildren = children
 }
