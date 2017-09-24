@@ -21,30 +21,33 @@
 
 package net.katsstuff.pleasewelcome.command
 
-import org.spongepowered.api.command.{CommandException, CommandResult, CommandSource}
+import java.util.Locale
+
 import org.spongepowered.api.command.args.CommandContext
 import org.spongepowered.api.command.spec.CommandSpec
+import org.spongepowered.api.command.{CommandException, CommandResult, CommandSource}
 import org.spongepowered.api.entity.living.player.Player
-
-import io.github.katrix.katlib.command.{CmdPlugin, CommandBase}
-import io.github.katrix.katlib.helper.Implicits._
-import net.katsstuff.pleasewelcome.PleaseWelcomePlugin
-import net.katsstuff.pleasewelcome.lib.LibPerm
+import org.spongepowered.api.text.Text
 import org.spongepowered.api.text.format.TextColors._
 
+import io.github.katrix.katlib.command.{CmdPlugin, LocalizedCommand}
+import io.github.katrix.katlib.helper.Implicits._
+import io.github.katrix.katlib.i18n.Localized
+import net.katsstuff.pleasewelcome.lib.LibPerm
+import net.katsstuff.pleasewelcome.{PWResource, PleaseWelcomePlugin}
 import shapeless.Typeable
 
-class GotoSpawnCmd(parent: CmdPlugin)(implicit plugin: PleaseWelcomePlugin) extends CommandBase(Some(parent)) {
+class GotoSpawnCmd(parent: CmdPlugin)(implicit plugin: PleaseWelcomePlugin) extends LocalizedCommand(Some(parent)) {
   val playerTypeable: Typeable[Player] = Typeable[Player]
 
-  override def execute(src: CommandSource, args: CommandContext): CommandResult = {
+  override def execute(src: CommandSource, args: CommandContext): CommandResult = Localized(src) { implicit locale =>
     val executed = for {
-      player    <- playerTypeable.cast(src).toRight(nonPlayerError)
-      transform <- plugin.data.loginTransform.toRight(new CommandException(t"${RED}Either a spawn location is not set, or it is invalid"))
+      player    <- playerTypeable.cast(src).toRight(nonPlayerErrorLocalized)
+      transform <- plugin.data.loginTransform.toRight(new CommandException(PWResource.getText("cmd.gotoSpawn.locationError")))
       text <- Either.cond(
         player.setLocationAndRotationSafely(transform.getLocation, transform.getRotation),
-        t"${GREEN}Teleported to welcome location",
-        new CommandException(t"${RED}Either a spawn location is not set, or it is invalid")
+        t"$GREEN${PWResource.get("cmd.gotoSpawn.success")}",
+        new CommandException(PWResource.getText("cmd.gotoSpawn.locationError"))
       )
     } yield text
 
@@ -56,10 +59,12 @@ class GotoSpawnCmd(parent: CmdPlugin)(implicit plugin: PleaseWelcomePlugin) exte
     }
   }
 
+  override def localizedDescription(implicit locale: Locale): Option[Text] = Some(PWResource.getText("cmd.gotoSpawn.description"))
+
   override def commandSpec: CommandSpec =
     CommandSpec
       .builder()
-      .description(t"Teleport to the welcome spawn")
+      .description(this)
       .executor(this)
       .permission(LibPerm.GotoSpawn)
       .build()
