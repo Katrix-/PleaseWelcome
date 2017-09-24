@@ -50,8 +50,8 @@ import ninja.leaping.configurate.objectmapping.serialize.{TypeSerializer, TypeSe
 
 object PleaseWelcome {
 
-  final val Version         = s"${KatLib.CompiledAgainst}-1.0.0"
-  final val ConstantVersion = "6.0.0-1.0.0"
+  final val Version         = s"1.1.0-${KatLib.CompiledAgainst}"
+  final val ConstantVersion = "1.1.0-6.0.0"
   assert(Version == ConstantVersion)
 }
 

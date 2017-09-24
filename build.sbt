@@ -9,7 +9,7 @@ lazy val publishResolver = {
 lazy val commonSettings = Seq(
   name := s"PleaseWelcome-${removeSnapshot(spongeApiVersion.value)}",
   organization := "net.katsstuff",
-  version := "1.0.0",
+  version := "1.1.0",
   scalaVersion := "2.12.2",
   resolvers += "jitpack" at "https://jitpack.io",
   libraryDependencies += katLibDependecy("shared"),
@@ -31,15 +31,19 @@ lazy val commonSettings = Seq(
     val art = (artifact in (Compile, assembly)).value
     art.copy(`classifier` = Some("assembly"))
   },
+  artifactName := { (sv, module, artifact) =>
+    s"${artifact.name}-${module.revision}.${artifact.extension}"
+  },
+  assemblyJarName := s"${name.value}-assembly-${version.value}.jar",
   spongePluginInfo := spongePluginInfo.value.copy(
     id = "pleasewelcome",
     name = Some("PleaseWelcome"),
-    version = Some(s"${removeSnapshot(spongeApiVersion.value)}-${version.value}"),
+    version = Some(s"${version.value}-${removeSnapshot(spongeApiVersion.value)}"),
     authors = Seq("Katrix"),
     description = Some("A plugin to control what happens when a new player joins the server."),
     dependencies = Set(
       DependencyInfo("spongeapi", Some(removeSnapshot(spongeApiVersion.value))),
-      DependencyInfo("katlib", Some(s"${removeSnapshot(spongeApiVersion.value)}-2.1.0"))
+      DependencyInfo("katlib", Some(s"2.3.1-${removeSnapshot(spongeApiVersion.value)}"))
     )
   )
 ) ++ addArtifact(artifact in (Compile, assembly), assembly)
